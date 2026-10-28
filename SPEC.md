@@ -1,40 +1,54 @@
 # Naevia — Demo 1 Implementation Specification
 
-Version: 0.3 | Status: Implementation baseline with acceptance checklist
+Version: 0.6 | Status: Self-contained developer handoff; visual delivery in progress; Demo 1 scope unchanged
+
+This is the single handoff document, published as root-level `SPEC.md` on GitHub. A developer must be able to implement, run, demonstrate, and record acceptance of Demo 1 using this file plus the supplied visual assets. No PRD, README, separate design document, conversation history, or external acceptance report is required. Source code and visual assets are deliverables, not additional specification documents. Setup instructions and actual acceptance results must be maintained in sections 11 and 12 of this same file.
 
 ## 1. Goal and Scope
 
-Build the Godot frontend first, then connect the API backend and automatic local memory. This document specifies the tools, components, interactions, and implementation order needed to start development.
+Build the playable Godot frontend from the project's visual handoff, then connect the API backend and automatic local memory. Visual production is separate from this specification and may be delivered in a later repository commit. The next developer should inspect the latest completed asset delivery using section 3.3, then follow the implementation milestones in section 8. Do not restart visual concept development as a prerequisite to implementation.
+
+Naevia is a companionship-focused pixel game in a private world. The player gathers materials and furnishes a small home while spending time with AI characters who have distinct personalities, their own current lives, and independent memories. Conversation is part of play: characters may visit or send a messenger, and the player can move and gather while waiting for a reply. Replies appear in the world, not in a permanent chat sidebar. Ignoring an invitation or taking time away causes no relationship penalty. Characters should show situational interest rather than constant praise.
 
 Demo 1 includes one fixed home, a small mining area, furniture placement, the witch and blacksmith, clickable speech bubbles, independent persistent memories, and a three-person conversation.
 
 Keepsakes, expansion, birthdays, official gifts, local inference, and large-world simulation are deferred. Numeric values below are adjustable implementation defaults, not measured results.
 
+The delivered result must be a playable Windows game with a local backend and live cloud AI, not a visual mockup, web page, prerecorded interaction, or mock-only chat demo. A developer must demonstrate movement, mining, furniture arrangement, private and group conversation, independent cross-session memories, and save recovery in the same application. This revision consolidates handoff instructions without reducing the feature scope or the observable acceptance criteria in section 10. Existing artwork is an implementation input, not evidence that gameplay or required animation has been completed.
+
 ## 2. Tools and Responsibilities
 
-- **Client:** Godot 4.7 stable, standard build, GDScript, Compatibility renderer. Use matching Windows export templates. Record the exact editor version in README.
+- **Client:** Godot 4.7 stable, standard build, GDScript, Compatibility renderer. Use matching Windows export templates. Record the exact editor version in section 12.
 - **Backend:** Python 3.12, FastAPI, Uvicorn, Pydantic, HTTPX. Lock dependencies when scaffolding.
 - **Model adapter:** HTTP chat-completions transport for an OpenAI-compatible provider. This names the protocol, not the chosen model vendor. Endpoint, model ID, and credentials are configuration.
 - **Persistence:** Local JSON saves and character memories; JSONL dialogue history. No SQL, vector database, or embedding model for Demo 1.
-- **Assets:** AI image generation for initial concepts if useful; LibreSprite for pixel cleanup, animation alignment, and PNG export; Godot TileSet editor for tile collision and assembly.
+- **Assets:** Reuse the repository's existing visual references, previews, palette, and exported PNGs. Use LibreSprite or equivalent tools only for missing assets, pixel cleanup, and animation alignment; use Godot's TileSet editor for tile collision and assembly. Preserve the established character designs and visual direction.
 - **Verification:** pytest for backend and memory contracts; manual Godot playthrough for visual interaction.
 
 Godot owns gameplay, dialogue coordination, and all local file reads/writes. FastAPI composes prompts, calls the model, normalizes responses, and returns proposed memory updates. The cloud model never searches the player's disk.
 
-During development, run the backend on localhost. For external testers, point the same client to an HTTPS deployment with a revocable demo access token. Keep provider credentials on the backend; no accounts or cloud-save database are needed for Demo 1.
+For Demo 1, run the Godot client and FastAPI backend on the same Windows computer. Bind the backend to loopback (`127.0.0.1`) and keep saves local. No hosted deployment, accounts, demo access tokens, or cloud-save database are required. Keep provider credentials in local backend environment configuration, outside client files and version control. Live AI requests still go to the configured cloud provider and require internet; mock mode can run offline. Local model inference remains out of scope.
 
 ### Repository structure
 
 ```text
 Naevia/
-  PRD.md
   SPEC.md
-  README.md
+  art/
+    references/
+    previews/
+    source/
+    export/
+      characters/
+      manifest.json         # Add or validate during asset integration
   client/
     project.godot
     scenes/
     scripts/
     assets/
+    data/visuals.json
+    data/items.json
+    data/tiles.json
     data/characters/
     data/furniture.json
   server/
@@ -45,7 +59,12 @@ Naevia/
     tests/
     .env.example
     requirements.lock
+  build/windows/
+    Naevia.exe
+    Naevia.pck              # If resources are not embedded
 ```
+
+The published handoff initially contains only `SPEC.md`; the owner will add the completed visual package separately. The client, server, configuration examples, tests, and Windows build above are implementation outputs to create. Do not claim they already exist. No additional Markdown files are required for implementation handoff or acceptance.
 
 ## 3. Frontend Foundation
 
@@ -78,11 +97,42 @@ Start with a 640 × 360 world viewport, nearest-neighbor texture filtering, inte
 
 ### 3.3 Art and animation
 
-First create one scene composition establishing palette, character appearance, house, mining area, and bubble placement. Then separate it into reusable assets.
+#### Existing visual handoff
 
-Prepare ground, grass, stone, flooring, walls, door, table, chair, lamp, and two background layers. Prepare player, witch, blacksmith, and pigeon sprites. Start with placeholders so art completion does not block interaction work.
+Use the following paths to locate the visual baseline when the art delivery is available. This list describes integration inputs, not a live inventory or a statement that production is complete:
 
-Initial animation targets: four-frame player walking and mining, two-frame pigeon flight, character idle poses, and short walk cycles for visitors. Keep foot anchors consistent. Export PNG sprite sheets; use AnimatedSprite2D for playback. Small debris can use GPUParticles2D. No prerecorded video is needed.
+- `art/references/scene-style-v1.png` and `art/references/characters-v1.png`: source visual references.
+- `art/previews/scene_direction.png`: 640 × 360 scene composition defining the home's cutaway presentation, adjacent mining area, palette, and environmental style. This is a reference image, not a playable level or a source of collision data. Furniture, characters, and mineable terrain must become independent game objects.
+- `art/previews/character_lineup.png` and `character_lineup_4x.png`: character proportions and identity; the 4× version is for inspection, not a runtime sprite sheet.
+- `art/previews/palette.png` and `art/source/palette.json`: shared color direction.
+- `art/export/characters/player_idle.png`, `witch_idle.png`, and `blacksmith_idle.png`: RGBA PNGs, each 96 × 64, containing two horizontal 48 × 64 frames.
+- `art/export/characters/pigeon_idle.png`: RGBA PNG, 64 × 32, containing two horizontal 32 × 32 frames.
+
+The exported character sheets use no frame spacing. The existing export process places humanoid feet at frame coordinate `(24, 60)` and pigeon feet at `(16, 28)`; verify those anchors visually when importing. Use the native-size files from `art/export/`, not the higher-resolution generation sources. Preserve source artwork and previews. `art/source/` contains preparation scripts and generation provenance, not game runtime dependencies; the Windows build must not depend on their machine-specific paths.
+
+Asset completeness is determined from the latest delivered files and their manifest, not from a partial inventory captured during production. Once the owner confirms visual delivery is complete, inspect the final export and map available assets to the requirements below. Asset notes may be useful if supplied, but this specification does not depend on a separate art brief or delivery document. If a required asset is missing, record the gap in section 12 and use a temporary substitute only during development; do not remove a Demo 1 requirement. Art integration must not change the feature scope or acceptance checklist.
+
+#### Runtime integration and ownership
+
+1. Inspect exported PNG dimensions, transparency, frame layout, orientation, and baseline. If `art/export/manifest.json` exists, validate it against actual files; otherwise create it as part of integration. Record stable visual IDs, relative paths, frame dimensions/count, playback rate, looping, and anchors.
+2. Place validated runtime assets under `client/assets/`, preserving traceable paths back to the art export. Build `SpriteFrames` resources and character scenes in Godot. Use nearest-neighbor filtering and match the scale in section 3.2; keep collision bounds independent of transparent sprite canvas size.
+3. Build a small editable level from separate background, walls, solid terrain, resource tiles, furniture, and character nodes. Do not display a flattened scene preview as the interactive world. Configure TileSet collision and mineable cells explicitly.
+4. Keep visual lookup in `client/data/visuals.json`, keyed by stable visual IDs referencing Godot resources. Keep gameplay definitions in `items.json`, `tiles.json`, and `furniture.json`. An item definition specifies its icon visual ID; a tile definition specifies its tile visual ID, mining rules, and drop item ID. Do not infer gameplay behavior from PNG filenames or pixels.
+5. World saves reference stable definition IDs and object positions, not absolute artwork paths or sprite image data. Definitions and visuals ship with the client; changing an asset path should only require updating its visual mapping, not rewriting player saves.
+
+For example, a stone resource cell references `tile.stone`, whose definition references a stone visual and drops `item.stone`. Mining is local game logic: remove the resource cell, add material, update rendering, and save. The backend and AI do not choose tile textures or authorize ordinary mining and placement.
+
+#### Required coverage and remaining assets
+
+Complete the existing scene direction with reusable ground, grass, stone, flooring, walls, door, table, chair, lamp, and two background layers. Provide matching inventory icons. Use the existing player, witch, blacksmith, and pigeon designs throughout; add any missing art in the same style rather than replacing the established designs.
+
+PNG is the runtime exchange format. Characters, furniture, item icons, and overlay effects require transparent backgrounds. Tiles use a 16 × 16 grid; furniture dimensions and placement footprints use whole tiles. Prefer the delivered manifest for frame layout and anchors, validated against actual files. Initial defaults for missing metadata are 48 × 64 humanoid frames with feet at `(24, 60)`, 32 × 32 pigeon frames with feet at `(16, 28)`, 48 × 32 table, 16 × 32 chair, 16 × 48 floor lamp, and 16 × 16 inventory icons. These are import defaults, not permission to distort an approved asset. If the final art uses a different valid frame layout, adapt resource metadata while preserving the world proportions in section 3.2.
+
+Animation targets remain four-frame player walking and mining, two-frame pigeon flight, character idle poses, and short walk cycles for visitors. Keep foot anchors consistent with the imported idle sheets. Use `AnimatedSprite2D` for playback. Small debris can use `GPUParticles2D`. No prerecorded video is needed.
+
+Missing assets may use explicitly tracked temporary placeholders during development so gameplay implementation can proceed. Before final acceptance, required walking/mining/contact animations and essential world/furniture visuals must be present and coherent, as required by section 10. A static idle sheet or moving a static picture does not by itself satisfy the walking or mining animation requirement.
+
+Build conversation UI using Godot controls with live text, adaptive bubbles, and independent anchors. A UI preview may guide styling but must not replace functional input, buttons, or readable English/Chinese text.
 
 ### 3.4 Gameplay controls
 
@@ -146,9 +196,8 @@ Server environment:
 - NAEVIA_MODEL
 - NAEVIA_PROVIDER_API_KEY
 - NAEVIA_MODEL_MODE=mock or live
-- NAEVIA_DEMO_ACCESS_TOKEN for hosted testing
 
-Client configuration specifies backend URL and, for hosted tests, the demo access token. Keep real provider credentials out of client files and the repository. Mock mode requires no provider account.
+Client configuration specifies a local backend URL, initially `http://127.0.0.1:8000`. Keep real provider credentials out of client files and the repository. Mock mode requires no provider account. Hosted access configuration is deferred beyond Demo 1.
 
 ProviderAdapter exposes stream_reply(context) and update_memory(context). Use HTTPX for the external HTTP connection. Unsupported provider-specific protocols require an adapter; do not assume every provider implements the selected transport identically. Validate the selected provider/model with a smoke test before live integration.
 
@@ -179,6 +228,12 @@ A terminal error event contains the request ID and a displayable message. In God
 Ask the model for an optional first-line recipient marker such as @to:blacksmith. Buffer and remove this line before displaying text. Validate it against participants; missing or invalid markers default to the player. Normalize nonstreaming provider replies into the same event format if necessary.
 
 Mock mode returns deterministic streamed replies and valid memory snapshots. On failures preserve the player's message, offer retry, and keep gameplay running. Only commit a completed character turn to history.
+
+### 5.4 Memory update contract
+
+A memory request contains `request_id`, `character_id`, `base_revision`, the character's current `memory`, and `new_events` they actually heard. The response contains `request_id`, `character_id`, `base_revision`, and a replacement `memory` using section 6's schema. The client accepts it only if the character and base revision still match; the replacement revision must be `base_revision + 1`.
+
+Source event IDs must refer to supplied authorized new events or previously validated sources retained in the old memory. Reject invented sources, invalid scopes, oversized text, missing required fields, and changes to another character's memory. The response's processing cursor must correspond to the processed authorized events. On validation failure retain the old snapshot and leave the affected events pending. The backend is stateless: it returns proposals and never writes local save files.
 
 ## 6. Automatic Local Memory
 
@@ -236,13 +291,17 @@ Private entries inform private conversations. For Demo 1 group prompts, withhold
 
 world.json stores schema_version, player position, remaining resource tiles, material counts, stored furniture, and placed object IDs/positions. Use stable IDs, temporary-file replacement, and the same save-directory ownership as memory.
 
-Local storage does not imply local AI processing. The backend and provider receive the selected context sent for a request. Do not log full dialogue or memory by default on the hosted service.
+Local storage does not imply local AI processing. The local backend and configured cloud provider receive the selected context sent for a live request. Do not log full dialogue or memory by default in the backend.
 
 ## 8. Implementation Milestones
 
-### A. Frontend with mock dialogue
+### A. Existing visuals to playable frontend with mock dialogue
 
-Create the Godot project, scene layout, visual references, placeholder assets, movement, mining, furniture controls, and bubbles. Use a local mock reply source first. Complete when a player can gather, decorate, click a pigeon, type, and receive replies without live AI.
+Begin by inventorying the latest `art/export/` delivery, validating the available character sheets, and importing the existing palette and visuals into a new Godot project. Build one small scene matching the current reference direction, using separate objects and tiles. Establish stable definition/visual IDs and validate collision, pixel scale, foot alignment, and draw order before expanding interaction.
+
+Then implement movement, mining, inventory and furniture controls, clickable contacts, adaptive bubbles, and a local mock reply source. Cover both witch and blacksmith scenes visually from the start; independent persistent memories are added in milestone C. Fill asset gaps incrementally without pausing the whole build for a new concept phase.
+
+Complete when a player can gather stone, obtain/place/move/store furniture, click a pigeon or visitor, type and send, and receive mock replies while the world stays responsive. Maintain remaining asset gaps in section 12 of this specification; this milestone does not waive the final visual or live-AI acceptance requirements.
 
 ### B. Backend framework and live model
 
@@ -258,9 +317,9 @@ Implement Invite Both, speaker coordination, recipient markers, shared history, 
 
 ### E. Playable Windows handoff
 
-Replace essential placeholders, finish required animation and saving, and export Windows. Deliver the Godot project, backend source, locked dependencies, example configuration, Windows build, and README.
+Integrate the final available art delivery, replace essential placeholders, finish required animation and saving, and export Windows. Check the build against the established scene/character direction and complete the unchanged acceptance checklist in section 10 using a live model. Deliver the Godot project, backend source, locked dependencies, example configuration, Windows build, and setup instructions.
 
-README must explain editor setup, backend setup, mock/live modes, model configuration, running locally, hosted endpoint configuration, and export. List placeholders and known issues.
+Complete section 11 with the actual validated installation, startup, model configuration, and export instructions. Complete section 12 with the actual implementation status, asset gaps, known issues, test results, and per-item acceptance outcomes. Keep this material in the same root-level `SPEC.md`; do not require another Markdown document to operate or assess the delivered demo.
 
 ## 9. Verification
 
@@ -275,7 +334,7 @@ Acceptance playthrough:
 5. Let them respond and talk to each other, without scripting a required reaction.
 6. Restart and verify updated individual memories and the saved room.
 
-Model vendor, exact model ID, final character writing, and final visual palette remain tuning/configuration choices. They do not block starting frontend and backend mock work. Select and record a working cloud model before live milestone B is complete.
+Model vendor, exact model ID, and final character writing remain tuning/configuration choices. The current artwork and palette provide the visual baseline; only necessary adjustments for integration and readability should be made during implementation. These choices do not block frontend and backend mock work. Select and record a working cloud model before live milestone B is complete.
 
 ## 10. Demo 1 Acceptance Checklist
 
@@ -325,7 +384,7 @@ This is the product acceptance checklist for the first playable demo. Pass items
 
 ### 10.7 Handoff
 
-- [ ] Another developer can follow README to open the client, run the backend in mock mode, configure live AI, and produce the Windows build.
+- [ ] Another developer can follow section 11 of this SPEC to open the client, run the local backend in mock mode, configure live AI, and produce the Windows build.
 - [ ] The delivered source includes configuration examples, dependency versions, development contact triggers, and a clear list of placeholders and known issues. Real provider credentials are absent from source and client builds.
 
 ### Acceptance session
@@ -336,7 +395,92 @@ Run this once from a fresh save and once with an existing save. Record the machi
 
 Demo 1 is accepted when these checks pass and the owner is satisfied with the visual coherence, character distinction, and comfort of alternating play and conversation. Final art polish, keepsakes, expansion, celebrations, local inference, and a larger world are not acceptance conditions for this demo.
 
-## 11. Technical References
+## 11. Setup, Running, and Windows Delivery
+
+The instructions below define the required implementation contract. No application or successful execution is claimed by this document. The implementing developer must verify these steps on the delivered revision, correct paths/options here if necessary, and record actual versions and outcomes in section 12. Do not delegate these instructions to a README.
+
+### 11.1 Development setup and mock mode
+
+Prerequisites: Windows, Godot 4.7 standard with matching export templates, and Python 3.12. `requirements.lock` must contain pinned, installable backend dependencies, including support for loading `.env` with Uvicorn. Keep `.env`, provider secrets, virtual environments, Godot import caches, and personal saves out of version control; provide `server/.env.example` with non-secret examples.
+
+From the repository root, in PowerShell:
+
+```powershell
+Set-Location server
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.lock
+Copy-Item .env.example .env
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --env-file .env
+```
+
+Copy `.env.example` only on initial setup; do not overwrite an existing configured `.env`. The supplied example defaults to `NAEVIA_MODEL_MODE=mock`. Verify `http://127.0.0.1:8000/health` reports healthy mock mode. Open `client/project.godot` in the matching Godot editor, use backend URL `http://127.0.0.1:8000`, and run the main scene. No provider account or internet is needed for mock dialogue and basic gameplay. The main scene, client configuration location, and any differing executable names must be recorded here by the developer.
+
+### 11.2 Live AI
+
+In local `server/.env`, set `NAEVIA_MODEL_MODE=live`, `NAEVIA_PROVIDER_BASE_URL`, `NAEVIA_MODEL`, and `NAEVIA_PROVIDER_API_KEY`; restart the local backend. Document whether the configured base URL includes `/v1` so the adapter does not accidentally duplicate or omit it. Keep the actual key out of this SPEC, logs, screenshots, client files, and builds.
+
+Verify `/health` reports live mode, then send an unscripted message to each NPC and check incremental display. The chosen provider must support both reply generation and validated memory proposals through the adapter. Record the provider/model IDs and actual smoke-test outcome in section 12. Do not mark live conversation or memory acceptance passed using mock responses. If credentials are unavailable, deliver working mock mode but report live-dependent acceptance items as BLOCKED; Demo 1 is not fully accepted yet.
+
+### 11.3 Data location and recovery
+
+Configure the Godot project name as `Naevia`. With default Godot user-directory settings, saves are at `%APPDATA%\Godot\app_userdata\Naevia\saves\default\`, corresponding to `user://saves/default/`. If a custom directory is chosen, replace this path here with the actual location. Assets and static definitions belong to the game package; world state, history, and NPC memories belong to the writable save directory.
+
+To test a fresh save, close the game, preserve the existing save directory as a backup, and start with a separate empty save. Do not reset a user's real save without preserving it. To test an existing save, reopen the preserved test save and verify materials, furniture, transcript, and individual NPC knowledge. Local storage does not prevent the selected context from being transmitted to the configured cloud provider in live mode.
+
+### 11.4 Tests and export
+
+From `server/`, run the focused backend suite with `.\.venv\Scripts\python.exe -m pytest`. Record the actual result and test scope in section 12. Use manual Godot/Windows playthroughs for visual, input, and responsiveness checks; backend tests alone do not establish acceptance.
+
+Provide a checked-in Windows export preset named `Windows Desktop`. Export the client with the matching Godot templates to `build/windows/Naevia.exe`, including its resource package if not embedded. The developer must record the exact working export steps and output paths here after validation. Distribute backend source, pinned dependencies, `.env.example`, and client assets with the project; never bundle a real provider key.
+
+For this local demo, an explicitly documented two-process launch is sufficient: start the Python backend as above, then run `build/windows/Naevia.exe`. A unified launcher may automate that sequence but is not a new acceptance condition. A tester should not need the Godot editor to play the exported build. If the backend is stopped or unreachable, the game must retain basic gameplay and expose a retryable conversation error.
+
+## 12. Implementation Status and Acceptance Record
+
+This section is the acceptance report location. The implementing developer updates it in this same SPEC; do not create a separate report or claim acceptance from a plan. Current status: specification prepared, visual production in progress, game/backend not implemented, no acceptance playthrough performed. All unchecked requirements in section 10 are NOT RUN.
+
+### 12.1 Delivery and environment record
+
+Before requesting acceptance, replace the following pending entries with actual values:
+
+- Source revision and Windows build identifier/path: pending implementation.
+- Final visual package revision and manifest path: pending completed visual delivery.
+- Windows version, CPU/RAM/GPU, and display scaling: not recorded.
+- Exact Godot/editor/export-template version and Python/dependency versions: not recorded.
+- Provider name, model ID, and mock/live mode: not selected or verified; never include a secret.
+- Actual client config path, startup commands, and export steps: pending validation of section 11.
+- First visible reply delay and time to complete reply, measured from Send: not measured. Record observations rather than inventing a latency target.
+- Remaining placeholders, asset gaps, and known issues: inventory pending implementation.
+- Backend test command, result, and relevant context-isolation/memory-recovery checks: not run.
+
+### 12.2 Per-item outcomes
+
+Give each checkbox in section 10 a stable identifier based on its subsection and order: `10.1-1` through `10.1-4`, `10.2-1` through `10.2-5`, `10.3-1` through `10.3-4`, `10.4-1` through `10.4-4`, `10.5-1` through `10.5-4`, `10.6-1` through `10.6-3`, and `10.7-1` through `10.7-2`. There are 26 checks; every one needs an outcome.
+
+For each identifier append a result in this format, directly in this subsection:
+
+```text
+Check: <identifier and short requirement>
+Status: PASS | FAIL | BLOCKED | NOT RUN
+Mode/build: <live or mock, build identifier>
+Observed: <what actually happened, including steps to reproduce a failure>
+Evidence: <sanitized screenshot/recording/test reference, or concrete observation>
+Remaining work: <specific issue, or none>
+```
+
+Artifacts may be referenced if available, but the observed result and remaining work must be understandable from this SPEC alone. Mark section 10 checkboxes complete only for actually passed requirements; BLOCKED and NOT RUN remain unchecked. Request-context evidence must demonstrate isolation without exposing real personal dialogue or API keys.
+
+### 12.3 Connected acceptance sessions
+
+Run the full session in section 10 twice: once from a fresh test save and once from an existing test save. For each run, record the date, build/model, initial save state, observed sequence, failed check IDs, and save/memory state after restarting. Include at least one live NPC-to-NPC exchange and later recall of a new shareable detail learned from the other NPC. Sharing only the player's announcement is not enough to demonstrate learning from another character.
+
+Also interrupt the API connection to verify errors and retry behavior, and check that retry/restart does not duplicate a completed exchange. Confirm a privately shared detail is absent from the other NPC's input, and that group context does not contain the full private memory. No hard-coded response may substitute for this evidence.
+
+### 12.4 Acceptance decision
+
+Current decision: NOT READY — implementation and live playthroughs have not been performed. Update only after recording actual outcomes. Demo 1 is accepted when all required checks pass in the exported Windows application and the owner is satisfied with visual coherence, character distinction, and comfort of alternating play and conversation. Any missing credentials, missing required animation, mock-only demonstration, or untested persistence remains visible as incomplete work. Later keepsakes, expansion, celebrations, gifts, local inference, and a larger world remain out of scope.
+
+## 13. Technical References
 
 - [Godot 4.7 stable](https://godotengine.org/download/archive/4.7-stable/)
 - [Godot local data paths](https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html)
