@@ -1,6 +1,6 @@
 # Naevia — Demo 1 Implementation Specification
 
-Version: 0.6 | Status: Self-contained developer handoff; visual delivery in progress; Demo 1 scope unchanged
+Version: 0.7 | Status: Visual assets delivered and file checks passed; game implementation pending; Demo 1 scope unchanged
 
 This is the single handoff document, published as root-level `SPEC.md` on GitHub. A developer must be able to implement, run, demonstrate, and record acceptance of Demo 1 using this file plus the supplied visual assets. No PRD, README, separate design document, conversation history, or external acceptance report is required. Source code and visual assets are deliverables, not additional specification documents. Setup instructions and actual acceptance results must be maintained in sections 11 and 12 of this same file.
 
@@ -64,7 +64,7 @@ Naevia/
     Naevia.pck              # If resources are not embedded
 ```
 
-The published handoff initially contains only `SPEC.md`; the owner will add the completed visual package separately. The client, server, configuration examples, tests, and Windows build above are implementation outputs to create. Do not claim they already exist. No additional Markdown files are required for implementation handoff or acceptance.
+The published handoff contains `SPEC.md` plus the completed visual package under `art/`. The client, server, configuration examples, tests, and Windows build above are implementation outputs to create. Do not claim they already exist. No additional Markdown files are required for implementation handoff or acceptance. The handoff includes runtime exports, previews, source visual references, the palette, and the asset validation report; intermediate generation images and preparation scripts are retained locally and are not required to import these ready-to-use exports.
 
 ## 3. Frontend Foundation
 
@@ -99,7 +99,7 @@ Start with a 640 × 360 world viewport, nearest-neighbor texture filtering, inte
 
 #### Existing visual handoff
 
-Use the following paths to locate the visual baseline when the art delivery is available. This list describes integration inputs, not a live inventory or a statement that production is complete:
+The completed visual delivery contains 35 runtime PNGs and `art/export/manifest.json`: 10 character sheets, 11 tiles, 3 house props, 3 furniture images, 4 inventory icons, 2 effects, and 2 backgrounds. Use the following paths as the visual baseline:
 
 - `art/references/scene-style-v1.png` and `art/references/characters-v1.png`: source visual references.
 - `art/previews/scene_direction.png`: 640 × 360 scene composition defining the home's cutaway presentation, adjacent mining area, palette, and environmental style. This is a reference image, not a playable level or a source of collision data. Furniture, characters, and mineable terrain must become independent game objects.
@@ -110,7 +110,19 @@ Use the following paths to locate the visual baseline when the art delivery is a
 
 The exported character sheets use no frame spacing. The existing export process places humanoid feet at frame coordinate `(24, 60)` and pigeon feet at `(16, 28)`; verify those anchors visually when importing. Use the native-size files from `art/export/`, not the higher-resolution generation sources. Preserve source artwork and previews. `art/source/` contains preparation scripts and generation provenance, not game runtime dependencies; the Windows build must not depend on their machine-specific paths.
 
-Asset completeness is determined from the latest delivered files and their manifest, not from a partial inventory captured during production. Once the owner confirms visual delivery is complete, inspect the final export and map available assets to the requirements below. Asset notes may be useful if supplied, but this specification does not depend on a separate art brief or delivery document. If a required asset is missing, record the gap in section 12 and use a temporary substitute only during development; do not remove a Demo 1 requirement. Art integration must not change the feature scope or acceptance checklist.
+Visual production is complete for this package. The 35 runtime PNGs passed file-contract validation, but have not yet been imported into a running Godot game. Use the delivered manifest and map the actual exports to the requirements below before introducing substitutes. No separate art brief or delivery document is required. If an integration gap is found, record it in section 12; do not remove a Demo 1 requirement. Art integration must not change the feature scope or acceptance checklist.
+
+#### Delivered visual details
+
+- `art/previews/scene_direction.png` is now a 640 × 360 composition assembled from the actual runtime exports; `scene_direction_2x.png` is its nearest-neighbor 1280 × 720 preview. Neither is a playable level or a substitute for individual world nodes.
+- `art/previews/animation_contact.png` and `animation_contact_2x.png` show the ten character actions frame by frame. Use manifest playback rates: idle 2 fps; player walk 8 fps; witch/blacksmith walk, player mining, and pigeon flight 6 fps. The jump pose is static. Left-facing sprites are mirrored by the engine.
+- Standing humanoid feet use `(24, 60)` and pigeon feet `(16, 28)`. The jump pose intentionally raises the visible feet inside the same canvas; do not shift the character node to compensate for its image bounds. World movement, flight paths, collision, and visual anchors are separate concerns.
+- `effects/mining_cracks.png` has three 16 × 16 frames and manifest `playback: manual_progress`, `fps: 0`, `loop: false`. Select frames by mining progress; do not autoplay the crack sheet. `effects/stone_chip.png` is a 4 × 4 particle image.
+- The landscape layer can repeat horizontally; the sky includes a sun and should not repeat indefinitely by default. Tile previews demonstrate the supplied straight-edge/limited platform set, not a complete autotile solution for arbitrary terrain.
+- The door is an open 32 × 48 frame with a 22 × 44 transparent opening. Configure passability explicitly; the PNG itself supplies no collision. Furniture is nonblocking for this prototype.
+- `art/previews/ui_direction.png` and `scene_ui_preview.png` guide native Godot controls. At a 1280 × 720 display, start with 20–22px body text, 16–18px secondary text, 16px horizontal bubble padding, 12px vertical padding, and a 44px minimum input/button height. Panel/background `#f4e9d2`, border `#4b382d`, text `#352c2a`; button normal/hover/pressed/disabled colors are `#eadbb9`, `#d4d8a5`, `#9ea77c`, `#c9c4b6`. Runtime UI PNGs are intentionally absent because the developer constructs these controls with live text.
+- Illustrations were generated with imagegen and normalized into native RGBA PNGs. No layered Aseprite source or redistributable font file is included. UI previews use a system font for demonstration only; bundle a separately verified English/Chinese font for the actual game.
+- `art/source/validation-report.json` records 35 assets, zero file-contract errors, per-asset SHA-256 values, frame bounds, and the checks performed. This validates import inputs, not runtime gameplay or artistic acceptance. Do not depend on the art producer's original absolute paths or regeneration scripts.
 
 #### Runtime integration and ownership
 
@@ -437,20 +449,20 @@ For this local demo, an explicitly documented two-process launch is sufficient: 
 
 ## 12. Implementation Status and Acceptance Record
 
-This section is the acceptance report location. The implementing developer updates it in this same SPEC; do not create a separate report or claim acceptance from a plan. Current status: specification prepared, visual production in progress, game/backend not implemented, no acceptance playthrough performed. All unchecked requirements in section 10 are NOT RUN.
+This section is the acceptance report location. The implementing developer updates it in this same SPEC; do not create a separate report or claim acceptance from a plan. Current status: visual package delivered, 35 runtime assets passed file-contract checks with zero errors, game/backend not implemented, no acceptance playthrough performed. All unchecked gameplay requirements in section 10 are NOT RUN. File validation was rerun before publishing this visual handoff.
 
 ### 12.1 Delivery and environment record
 
 Before requesting acceptance, replace the following pending entries with actual values:
 
 - Source revision and Windows build identifier/path: pending implementation.
-- Final visual package revision and manifest path: pending completed visual delivery.
+- Final visual package: delivered 2026-10-28; manifest `art/export/manifest.json`, 35 runtime PNGs. File checks passed; report `art/source/validation-report.json`. Exact source revision is the GitHub commit containing this visual handoff.
 - Windows version, CPU/RAM/GPU, and display scaling: not recorded.
 - Exact Godot/editor/export-template version and Python/dependency versions: not recorded.
 - Provider name, model ID, and mock/live mode: not selected or verified; never include a secret.
 - Actual client config path, startup commands, and export steps: pending validation of section 11.
 - First visible reply delay and time to complete reply, measured from Send: not measured. Record observations rather than inventing a latency target.
-- Remaining placeholders, asset gaps, and known issues: inventory pending implementation.
+- Remaining placeholders, asset gaps, and known issues: no missing required runtime artwork identified in file checks; Godot integration, in-game animation continuity, layering, collision, lighting, bubble anchors, and font bundling remain to be verified during implementation.
 - Backend test command, result, and relevant context-isolation/memory-recovery checks: not run.
 
 ### 12.2 Per-item outcomes

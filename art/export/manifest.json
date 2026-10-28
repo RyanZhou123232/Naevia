@@ -1,0 +1,393 @@
+{
+  "schema_version": 1,
+  "assets": [
+    {
+      "id": "character.player.idle",
+      "path": "characters/player_idle.png",
+      "frame_width": 48,
+      "frame_height": 64,
+      "frame_count": 2,
+      "fps": 2,
+      "loop": true,
+      "anchor_px": [
+        24,
+        60
+      ]
+    },
+    {
+      "id": "character.witch.idle",
+      "path": "characters/witch_idle.png",
+      "frame_width": 48,
+      "frame_height": 64,
+      "frame_count": 2,
+      "fps": 2,
+      "loop": true,
+      "anchor_px": [
+        24,
+        60
+      ]
+    },
+    {
+      "id": "character.blacksmith.idle",
+      "path": "characters/blacksmith_idle.png",
+      "frame_width": 48,
+      "frame_height": 64,
+      "frame_count": 2,
+      "fps": 2,
+      "loop": true,
+      "anchor_px": [
+        24,
+        60
+      ]
+    },
+    {
+      "id": "character.pigeon.idle",
+      "path": "characters/pigeon_idle.png",
+      "frame_width": 32,
+      "frame_height": 32,
+      "frame_count": 2,
+      "fps": 2,
+      "loop": true,
+      "anchor_px": [
+        16,
+        28
+      ]
+    },
+    {
+      "id": "character.player.walk",
+      "path": "characters/player_walk.png",
+      "frame_width": 48,
+      "frame_height": 64,
+      "frame_count": 4,
+      "fps": 8,
+      "loop": true,
+      "anchor_px": [
+        24,
+        60
+      ]
+    },
+    {
+      "id": "character.witch.walk",
+      "path": "characters/witch_walk.png",
+      "frame_width": 48,
+      "frame_height": 64,
+      "frame_count": 4,
+      "fps": 6,
+      "loop": true,
+      "anchor_px": [
+        24,
+        60
+      ]
+    },
+    {
+      "id": "character.blacksmith.walk",
+      "path": "characters/blacksmith_walk.png",
+      "frame_width": 48,
+      "frame_height": 64,
+      "frame_count": 4,
+      "fps": 6,
+      "loop": true,
+      "anchor_px": [
+        24,
+        60
+      ]
+    },
+    {
+      "id": "character.player.jump",
+      "path": "characters/player_jump.png",
+      "frame_width": 48,
+      "frame_height": 64,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false,
+      "anchor_px": [
+        24,
+        60
+      ]
+    },
+    {
+      "id": "character.player.mine",
+      "path": "characters/player_mine.png",
+      "frame_width": 48,
+      "frame_height": 64,
+      "frame_count": 4,
+      "fps": 6,
+      "loop": true,
+      "anchor_px": [
+        24,
+        60
+      ]
+    },
+    {
+      "id": "character.pigeon.fly",
+      "path": "characters/pigeon_fly.png",
+      "frame_width": 32,
+      "frame_height": 32,
+      "frame_count": 2,
+      "fps": 6,
+      "loop": true,
+      "anchor_px": [
+        16,
+        28
+      ]
+    },
+    {
+      "id": "tile.dirt_fill",
+      "path": "tiles/dirt_fill.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "tile.grass_top",
+      "path": "tiles/grass_top.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "tile.grass_edge_left",
+      "path": "tiles/grass_edge_left.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "tile.grass_edge_right",
+      "path": "tiles/grass_edge_right.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "tile.stone_fill",
+      "path": "tiles/stone_fill.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "tile.wood_floor",
+      "path": "tiles/wood_floor.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "tile.wall_wood",
+      "path": "tiles/wall_wood.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "tile.wall_stone",
+      "path": "tiles/wall_stone.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "tile.roof_fill",
+      "path": "tiles/roof_fill.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "tile.roof_edge_left",
+      "path": "tiles/roof_edge_left.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "tile.roof_edge_right",
+      "path": "tiles/roof_edge_right.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "prop.door",
+      "path": "props/door.png",
+      "frame_width": 32,
+      "frame_height": 48,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false,
+      "anchor_px": [
+        16,
+        48
+      ]
+    },
+    {
+      "id": "prop.window",
+      "path": "props/window.png",
+      "frame_width": 32,
+      "frame_height": 32,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false,
+      "anchor_px": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "prop.house_trim",
+      "path": "props/house_trim.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false,
+      "anchor_px": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "furniture.table",
+      "path": "furniture/table.png",
+      "frame_width": 48,
+      "frame_height": 32,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false,
+      "anchor_px": [
+        24,
+        32
+      ]
+    },
+    {
+      "id": "furniture.chair",
+      "path": "furniture/chair.png",
+      "frame_width": 16,
+      "frame_height": 32,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false,
+      "anchor_px": [
+        8,
+        32
+      ]
+    },
+    {
+      "id": "furniture.lamp",
+      "path": "furniture/lamp.png",
+      "frame_width": 16,
+      "frame_height": 48,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false,
+      "anchor_px": [
+        8,
+        48
+      ]
+    },
+    {
+      "id": "icon.stone",
+      "path": "icons/stone.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "icon.table",
+      "path": "icons/table.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "icon.chair",
+      "path": "icons/chair.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "icon.lamp",
+      "path": "icons/lamp.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "effect.stone_chip",
+      "path": "effects/stone_chip.png",
+      "frame_width": 4,
+      "frame_height": 4,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false,
+      "anchor_px": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "effect.mining_cracks",
+      "path": "effects/mining_cracks.png",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 3,
+      "fps": 0,
+      "loop": false,
+      "anchor_px": [
+        0,
+        0
+      ],
+      "playback": "manual_progress"
+    },
+    {
+      "id": "background.sky",
+      "path": "backgrounds/sky.png",
+      "frame_width": 640,
+      "frame_height": 360,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    },
+    {
+      "id": "background.distant_landscape",
+      "path": "backgrounds/distant_landscape.png",
+      "frame_width": 640,
+      "frame_height": 360,
+      "frame_count": 1,
+      "fps": 0,
+      "loop": false
+    }
+  ]
+}

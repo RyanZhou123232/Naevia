@@ -1,0 +1,737 @@
+{
+  "schema_version": 1,
+  "asset_count": 35,
+  "passed": true,
+  "errors": [],
+  "landscape_edge_channel_mismatches": 0,
+  "checks": [
+    "required filenames",
+    "manifest coverage and unique IDs",
+    "sheet dimensions",
+    "RGBA hard alpha",
+    "foreground transparency",
+    "distinct animation frames",
+    "standing baselines",
+    "uncut character silhouettes",
+    "fixed character anchors",
+    "static metadata",
+    "native and2x preview sizes",
+    "landscape periodic edge",
+    "door22x44 opening"
+  ],
+  "assets": [
+    {
+      "id": "character.player.idle",
+      "path": "characters/player_idle.png",
+      "width": 96,
+      "height": 64,
+      "frame_count": 2,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "8ff2840384c23c7b6c03f49d526b4161dfc1062d4f7580ad00f27531f4ce908f",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": {
+            "x": 13,
+            "y": 18,
+            "w": 22,
+            "h": 42
+          },
+          "sha256": "3c81c9e70ba22327086f11cf6b77f508378ba994d2280669d6531c5ea843d446"
+        },
+        {
+          "index": 1,
+          "bounds": {
+            "x": 13,
+            "y": 18,
+            "w": 22,
+            "h": 42
+          },
+          "sha256": "841dea0bea5a9c5a80fb9ae6bbb9d5046a1dace2ebae1c0e0318462d5835b1f1"
+        }
+      ]
+    },
+    {
+      "id": "character.witch.idle",
+      "path": "characters/witch_idle.png",
+      "width": 96,
+      "height": 64,
+      "frame_count": 2,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "50384772e1dc41f9a95a63a51e9abb8a1330980c92f954028e2a615dfce3fc24",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": {
+            "x": 10,
+            "y": 10,
+            "w": 28,
+            "h": 50
+          },
+          "sha256": "72c6f218b6fabc0ef0acdbd4d6d210278a4e6761d5ed8e24f4b8aa8246585f03"
+        },
+        {
+          "index": 1,
+          "bounds": {
+            "x": 10,
+            "y": 10,
+            "w": 28,
+            "h": 50
+          },
+          "sha256": "4341e1bbfdd40842ca3143eb87c060e6451b643521d381d20bf3fa5ea3b8bedc"
+        }
+      ]
+    },
+    {
+      "id": "character.blacksmith.idle",
+      "path": "characters/blacksmith_idle.png",
+      "width": 96,
+      "height": 64,
+      "frame_count": 2,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "f2291d3860720409edc4d8d2cf7858c6a606cb9e3009f813b08e8ef5093c0d4b",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": {
+            "x": 12,
+            "y": 16,
+            "w": 24,
+            "h": 44
+          },
+          "sha256": "173d88e8a0e6c422fdc1bc6d178310366933aa75868b25717716a4ca154782e6"
+        },
+        {
+          "index": 1,
+          "bounds": {
+            "x": 12,
+            "y": 16,
+            "w": 24,
+            "h": 44
+          },
+          "sha256": "bb17730aeedefccf883c426faaaf3b9fc4a4b51f29ff7a29dc23be170879e0bf"
+        }
+      ]
+    },
+    {
+      "id": "character.pigeon.idle",
+      "path": "characters/pigeon_idle.png",
+      "width": 64,
+      "height": 32,
+      "frame_count": 2,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "e767fec060b87d563bcca16da957c27aeff3e10b7b923bd1719d4e00a23ded10",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": {
+            "x": 8,
+            "y": 12,
+            "w": 17,
+            "h": 16
+          },
+          "sha256": "13192959982c4ef30559120381ff582959fa80748aee83f11a736012d27ff5f0"
+        },
+        {
+          "index": 1,
+          "bounds": {
+            "x": 8,
+            "y": 12,
+            "w": 17,
+            "h": 16
+          },
+          "sha256": "5d5924c155c9a39349691c3dcdce4af884df1503670757dd07adfcdaae28892d"
+        }
+      ]
+    },
+    {
+      "id": "character.player.walk",
+      "path": "characters/player_walk.png",
+      "width": 192,
+      "height": 64,
+      "frame_count": 4,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "46d58f189d414245af8845a49a58a5e102766e32b927cfdd48b3c710425cfefe",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": {
+            "x": 12,
+            "y": 18,
+            "w": 24,
+            "h": 42
+          },
+          "sha256": "aae9962951f5a1490953ab92f93bf12d31632d68ca4591ddf6c3065f4d4b9805"
+        },
+        {
+          "index": 1,
+          "bounds": {
+            "x": 13,
+            "y": 18,
+            "w": 22,
+            "h": 42
+          },
+          "sha256": "4949c2b25421270ed1e5f819fad874e968ba148ffe9ebe23c9be72fdbc6dfb0d"
+        },
+        {
+          "index": 2,
+          "bounds": {
+            "x": 12,
+            "y": 18,
+            "w": 25,
+            "h": 42
+          },
+          "sha256": "b7f9473916c0f542ba7304ebc2d85744eb3345928fc6c743a6ef922df6099e62"
+        },
+        {
+          "index": 3,
+          "bounds": {
+            "x": 13,
+            "y": 18,
+            "w": 22,
+            "h": 42
+          },
+          "sha256": "9466123131287319bb1e897da534666a62b9b0defa6db759db0ad7c331a05d3f"
+        }
+      ]
+    },
+    {
+      "id": "character.witch.walk",
+      "path": "characters/witch_walk.png",
+      "width": 192,
+      "height": 64,
+      "frame_count": 4,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "9acf377371b582baaa6a79e793739c470324c5c13a8a5d5b6c95b90aec93c8e6",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": {
+            "x": 10,
+            "y": 10,
+            "w": 29,
+            "h": 50
+          },
+          "sha256": "e8dbd2229ab712fa2cd85bd526c4717b3a4ae4193bda88639c997b0766401383"
+        },
+        {
+          "index": 1,
+          "bounds": {
+            "x": 10,
+            "y": 10,
+            "w": 28,
+            "h": 50
+          },
+          "sha256": "7fcdcaf540f19bd808e0f48fce46b96283e58fe8ee0d8031b53c2b3e8e53619f"
+        },
+        {
+          "index": 2,
+          "bounds": {
+            "x": 10,
+            "y": 10,
+            "w": 29,
+            "h": 50
+          },
+          "sha256": "d46f0d4cff636b241c0a9d5ed777192ae1475f49a4296e0eccb3dcb1fccfafdc"
+        },
+        {
+          "index": 3,
+          "bounds": {
+            "x": 10,
+            "y": 10,
+            "w": 29,
+            "h": 50
+          },
+          "sha256": "5f8b69e45480c8ac6d00b294a7a38c2461030443e7efddf4e1abb748e0857a45"
+        }
+      ]
+    },
+    {
+      "id": "character.blacksmith.walk",
+      "path": "characters/blacksmith_walk.png",
+      "width": 192,
+      "height": 64,
+      "frame_count": 4,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "d98163021a99db10d8a693c08d6a0eb488f74731193b1b9841f64409301b24fe",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": {
+            "x": 11,
+            "y": 16,
+            "w": 27,
+            "h": 44
+          },
+          "sha256": "f5d69d18643d9a81e050068413216590bf97314e2fef8ee87a1c9964a0289c21"
+        },
+        {
+          "index": 1,
+          "bounds": {
+            "x": 14,
+            "y": 16,
+            "w": 20,
+            "h": 44
+          },
+          "sha256": "cdabe9fe5420c778733accc0b1b5eb5c1fd14d4681ba200fb71d251f71412622"
+        },
+        {
+          "index": 2,
+          "bounds": {
+            "x": 10,
+            "y": 16,
+            "w": 29,
+            "h": 44
+          },
+          "sha256": "c0c544175096f19ff08904d574af41ea1b3b53f4b24ed51243543e1458b12631"
+        },
+        {
+          "index": 3,
+          "bounds": {
+            "x": 14,
+            "y": 16,
+            "w": 21,
+            "h": 44
+          },
+          "sha256": "bff7fa73b40390c57e170a2762df604ebe9bd93299565019b6aa4a6ebf8bde28"
+        }
+      ]
+    },
+    {
+      "id": "character.player.jump",
+      "path": "characters/player_jump.png",
+      "width": 48,
+      "height": 64,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "c1691db18557f38374dd87a7e09e6e2966a7b58becbade9a8b299486796e7bea",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": {
+            "x": 10,
+            "y": 18,
+            "w": 28,
+            "h": 39
+          },
+          "sha256": "b7f96be0481afb17cbc0617065d3797ee45c956db65828431bab39ab0e07250c"
+        }
+      ]
+    },
+    {
+      "id": "character.player.mine",
+      "path": "characters/player_mine.png",
+      "width": 192,
+      "height": 64,
+      "frame_count": 4,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "96a160d46ebb3606316511379ec48f705546407aa1f622f4fd30a64da1d59672",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": {
+            "x": 12,
+            "y": 11,
+            "w": 26,
+            "h": 49
+          },
+          "sha256": "91880e177bca4cb6e1c6d4fd18acc7557d02daecb880ffcbde85e7905d7ed8df"
+        },
+        {
+          "index": 1,
+          "bounds": {
+            "x": 12,
+            "y": 20,
+            "w": 33,
+            "h": 40
+          },
+          "sha256": "87749b639f151d5f0a19ab58b8e691a4d03d6e408ca14eea1d858cc155d83fad"
+        },
+        {
+          "index": 2,
+          "bounds": {
+            "x": 12,
+            "y": 20,
+            "w": 35,
+            "h": 40
+          },
+          "sha256": "34522b6a8bb7903801fcf15359894fdbdd30fac2751ea8ea70445138f1520634"
+        },
+        {
+          "index": 3,
+          "bounds": {
+            "x": 12,
+            "y": 14,
+            "w": 25,
+            "h": 46
+          },
+          "sha256": "dbadb73fa6d48175577f72cacb6dc5c86ab24f24a1b61464aef0529c84b4e6b2"
+        }
+      ]
+    },
+    {
+      "id": "character.pigeon.fly",
+      "path": "characters/pigeon_fly.png",
+      "width": 64,
+      "height": 32,
+      "frame_count": 2,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "dcffbd09d8dea506d33fe5a3e57ec13d9a5c259c1bb81ca97e7205653ea216dd",
+      "frames": [
+        {
+          "index": 0,
+          "bounds": {
+            "x": 3,
+            "y": 3,
+            "w": 23,
+            "h": 24
+          },
+          "sha256": "62c7663687ae88d718c544ca7cc89ea301705a5d53b8be02c0dd66a7738ba276"
+        },
+        {
+          "index": 1,
+          "bounds": {
+            "x": 2,
+            "y": 10,
+            "w": 24,
+            "h": 21
+          },
+          "sha256": "7a3f7b881feb74809074d3a365c6bf02e2ba1641f123d0fc0dc6df20a0d3821d"
+        }
+      ]
+    },
+    {
+      "id": "tile.dirt_fill",
+      "path": "tiles/dirt_fill.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        255
+      ],
+      "sha256": "e54669e6d844f11efafc029936af1f035addd91d26ec890c1daf375c0ed45a17"
+    },
+    {
+      "id": "tile.grass_top",
+      "path": "tiles/grass_top.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        255
+      ],
+      "sha256": "bd80f62999a1bc635f3a6b291614f514436bb305fb282e34ef36c07659486077"
+    },
+    {
+      "id": "tile.grass_edge_left",
+      "path": "tiles/grass_edge_left.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "5d9913d3851b91213ec37a40228be1e97746dd3aa5f7c6c6952ae6ef2b4b6b01"
+    },
+    {
+      "id": "tile.grass_edge_right",
+      "path": "tiles/grass_edge_right.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        255
+      ],
+      "sha256": "3598d2f465f0aeaf9898383795eaabef5e1368b0f7d2be18741a2689a2a61519"
+    },
+    {
+      "id": "tile.stone_fill",
+      "path": "tiles/stone_fill.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        255
+      ],
+      "sha256": "7ccc1f080c41eb4652d32643445b1c8b8521157ad846431f18790ee8d60689f0"
+    },
+    {
+      "id": "tile.wood_floor",
+      "path": "tiles/wood_floor.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        255
+      ],
+      "sha256": "db933b3188d2fc7a8600c7eee5413e64eac35a08895276e3d1579848cb96472f"
+    },
+    {
+      "id": "tile.wall_wood",
+      "path": "tiles/wall_wood.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        255
+      ],
+      "sha256": "c0305b950975460009c92fd0f6431b40deb83b9a38de2a74a1cf91afe05c9407"
+    },
+    {
+      "id": "tile.wall_stone",
+      "path": "tiles/wall_stone.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        255
+      ],
+      "sha256": "f0799500182be5db50711eafd5d18ff4b15eeecf9a0c46fed27ef8a594994a9a"
+    },
+    {
+      "id": "tile.roof_fill",
+      "path": "tiles/roof_fill.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        255
+      ],
+      "sha256": "713607a628296eecab8b195819963c6466767a6c15c1f3f8c9554f07798c3b27"
+    },
+    {
+      "id": "tile.roof_edge_left",
+      "path": "tiles/roof_edge_left.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "cf26fdd5ecb149c72279f76d460e05289c90074dd8ef52ece7cd4ff028ce9aed"
+    },
+    {
+      "id": "tile.roof_edge_right",
+      "path": "tiles/roof_edge_right.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "f3f758ac6f46aedd9e6841b557bd57abdecf30ab2c236144d33b0011a3643082"
+    },
+    {
+      "id": "prop.door",
+      "path": "props/door.png",
+      "width": 32,
+      "height": 48,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "ba482ae9bb139ff3a674b05a4072286ccee03a7908ddb68837587158364b4f8b"
+    },
+    {
+      "id": "prop.window",
+      "path": "props/window.png",
+      "width": 32,
+      "height": 32,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "e545cdd490cef2e548d226b04adcb82934a81b908a0a871a2fc8b96e5a2cfc97"
+    },
+    {
+      "id": "prop.house_trim",
+      "path": "props/house_trim.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "5786a6c3f27fad25c006e6c8358f43e28b2663bb7def514fbf5e8c4e4fad9ff9"
+    },
+    {
+      "id": "furniture.table",
+      "path": "furniture/table.png",
+      "width": 48,
+      "height": 32,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "638dfc763a278fe5a5dc3c184436f64ee85a0fab181801d94af5159e563d3f2b"
+    },
+    {
+      "id": "furniture.chair",
+      "path": "furniture/chair.png",
+      "width": 16,
+      "height": 32,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "1b0be1090b97b170f4ee9a42d7dadaa9d50819415a9172699bf297d500c0aec9"
+    },
+    {
+      "id": "furniture.lamp",
+      "path": "furniture/lamp.png",
+      "width": 16,
+      "height": 48,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "28ad30047c5f4fdbfa75a9e7fa25ea42b8043e0b1782c2435dcdb8ff7f083b81"
+    },
+    {
+      "id": "icon.stone",
+      "path": "icons/stone.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "01d320f400b5d93fc0815331885b672d11debede2234d6e7c92de632e8b0ad3d"
+    },
+    {
+      "id": "icon.table",
+      "path": "icons/table.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "6dd6047ef9bc5655762e0a92836a7e7fb6a4217eba5e427c8dcf777db294ddbb"
+    },
+    {
+      "id": "icon.chair",
+      "path": "icons/chair.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "e62e5ed7e46e3d409d52188d73635d620608838fbfbcc7dfb05dc1e8fb7cf6af"
+    },
+    {
+      "id": "icon.lamp",
+      "path": "icons/lamp.png",
+      "width": 16,
+      "height": 16,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "85f4347cb455d19dff5713e9fb124a0f75b14934014270e2eda6275a0d057aa1"
+    },
+    {
+      "id": "effect.stone_chip",
+      "path": "effects/stone_chip.png",
+      "width": 4,
+      "height": 4,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "64b3bfa6dcc034fc204a343c611459b97249b69ceb8093d160722169cb51e87d"
+    },
+    {
+      "id": "effect.mining_cracks",
+      "path": "effects/mining_cracks.png",
+      "width": 48,
+      "height": 16,
+      "frame_count": 3,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "85cbc3331a33d54aede979bb249de373c3fe993dbab28c4056eca10ada26eddd"
+    },
+    {
+      "id": "background.sky",
+      "path": "backgrounds/sky.png",
+      "width": 640,
+      "height": 360,
+      "frame_count": 1,
+      "alpha_values": [
+        255
+      ],
+      "sha256": "f2586f696203da82a208c2128c25d4de1f7bace7ed1966c3c17c2ad59c8e96f2"
+    },
+    {
+      "id": "background.distant_landscape",
+      "path": "backgrounds/distant_landscape.png",
+      "width": 640,
+      "height": 360,
+      "frame_count": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "sha256": "810f2486b2df4e36cb68a8b64973723ea53117e8ad13acc129d68266a5eadd48"
+    }
+  ],
+  "manual_review": [
+    "scene_direction_2x.png",
+    "animation_contact_2x.png",
+    "tile_repeat_2x.png",
+    "objects_2x.png",
+    "background_repeat.png",
+    "ui_direction.png"
+  ],
+  "limitations": [
+    "No Godot integration or runtime playthrough performed.",
+    "Pixel-level checks do not prove animation artistic quality or visual acceptance."
+  ]
+}
